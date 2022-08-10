@@ -3,9 +3,8 @@ package ru.captaindmitro.warehouseapp.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.captaindmitro.warehouseapp.domain.common.Result
 import ru.captaindmitro.warehouseapp.domain.models.Product
@@ -19,16 +18,16 @@ class SharedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _products: MutableStateFlow<UiState<List<Product>>> = MutableStateFlow(UiState.Empty)
-    val product = _products.asSharedFlow()
+    val product = _products.asStateFlow()
 
     init {
         getProducts()
     }
 
     fun getProducts() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _products.value = UiState.Loading
-            getProductsUseCase.execute().onEach { result ->
+            getProductsUseCase.execute().collectLatest { result ->
                 when (result) {
                     is Result.Success -> {
                         _products.value = if (result.data.isEmpty()) UiState.Empty else UiState.Success(result.data)
