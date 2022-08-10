@@ -2,13 +2,28 @@ package ru.captaindmitro.warehouseapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.ItemHomeProductBinding
 import ru.captaindmitro.warehouseapp.domain.models.Product
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
-    private val products: MutableList<Product> = mutableListOf()
+class HomeAdapter(
+    private val onClickListener: (Int) -> Unit
+) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+
+    private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+    private val asyncListDiffer =  AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = ItemHomeProductBinding.inflate(
@@ -20,31 +35,23 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.apply {
-            // TODO: Set click listener
-            bind(products[position])
+            // TODO: add click listener
+            bind(asyncListDiffer.currentList[position])
         }
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = asyncListDiffer.currentList.size
 
     fun setData(newProducts: List<Product>) {
-        DiffUtil.calculateDiff(DiffCallback(products, newProducts)).dispatchUpdatesTo(this)
-        products.clear()
-        products.addAll(newProducts)
-
-        val diffCallback = DiffCallback(products, newProducts)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        products.clear()
-        products.addAll(newProducts)
-        diffResult.dispatchUpdatesTo(this)
+        asyncListDiffer.submitList(newProducts)
     }
 
     class HomeViewHolder(val binding: ItemHomeProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
             binding.nameTextView.text = product.name
-            binding.codeTextView.text = product.code.toString()
-            binding.priceTextView.text = product.price.toString()
+            binding.codeTextView.text = binding.root.context.getString(R.string.code_field, product.code)
+            binding.priceTextView.text = binding.root.context.getString(R.string.price_field, product.price)
             binding.remainTextView.text = product.remain.toString()
         }
 

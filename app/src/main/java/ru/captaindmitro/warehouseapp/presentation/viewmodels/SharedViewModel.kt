@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.captaindmitro.warehouseapp.domain.common.Result
 import ru.captaindmitro.warehouseapp.domain.models.Product
@@ -18,7 +20,10 @@ class SharedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _products: MutableStateFlow<UiState<List<Product>>> = MutableStateFlow(UiState.Empty)
-    val product = _products.asStateFlow()
+    val products = _products.asStateFlow()
+
+    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
+    val selectedProduct = _selectedProduct.asStateFlow()
 
     init {
         getProducts()
@@ -38,6 +43,10 @@ class SharedViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setSelectedProduct(position: Int) {
+        _selectedProduct.value = (products.value as UiState.Success).data[position]
     }
 
 }

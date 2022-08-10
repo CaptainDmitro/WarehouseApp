@@ -10,14 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.FragmentHomeBinding
 import ru.captaindmitro.warehouseapp.presentation.common.UiState
 import ru.captaindmitro.warehouseapp.presentation.home.adapter.HomeAdapter
@@ -38,24 +36,28 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        homeAdapter = HomeAdapter().apply {
+        homeAdapter = HomeAdapter(sharedViewModel::setSelectedProduct).apply {
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
 
         binding.homeRecycleView.apply {
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
         }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                sharedViewModel.product.collectLatest { result ->
+                Log.i("Main", "HomeFragment: ${this.coroutineContext}")
+                sharedViewModel.products.collectLatest { result ->
+                    Log.i("Main", "Collecting...")
                     when (result) {
                         is UiState.Loading -> {
                             Log.i("Main", "Loading...")
@@ -72,6 +74,9 @@ class HomeFragment : Fragment() {
                         }
                         is UiState.Error -> {
                             Log.i("Main", "Error: ${result.exception}")
+                            Snackbar.make(binding.root, "${result.exception}", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("O") { sharedViewModel.getProducts() }
+                                .show()
                             binding.loadingIndicator.hide()
                         }
                     }
