@@ -7,6 +7,6 @@ data class Product(
     val checkText: String,
     val price: Double,
     val remain: Double,
-    val type: Double?,
+    val type: Int?,
     val alc: Double?
 )
