@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ru.captaindmitro.warehouseapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".WarehouseApp"
         android:allowBackup="true"

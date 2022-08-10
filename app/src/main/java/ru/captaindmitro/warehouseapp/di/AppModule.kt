@@ -13,6 +13,7 @@ import ru.captaindmitro.warehouseapp.data.RemoteDataSourceImpl
 import ru.captaindmitro.warehouseapp.data.RepositoryImpl
 import ru.captaindmitro.warehouseapp.data.WarehouseApi
 import ru.captaindmitro.warehouseapp.domain.Repository
+import ru.captaindmitro.warehouseapp.parser.SrvConverterFactory
 import javax.inject.Qualifier
 
 @Module
@@ -40,7 +41,7 @@ object AppModule {
     ): Repository = RepositoryImpl(remoteDataSource, dispatcher)
 
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder().baseUrl("https://edo.ilexx.ru").build()
+    fun provideRetrofit(): Retrofit = Retrofit.Builder().baseUrl("https://edo.ilexx.ru").addConverterFactory(SrvConverterFactory.create()).build()
 
     @Provides
     fun provideWarehouseApi(retrofit: Retrofit): WarehouseApi = retrofit.create(WarehouseApi::class.java)
