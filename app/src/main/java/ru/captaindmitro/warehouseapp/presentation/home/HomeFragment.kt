@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -37,6 +38,22 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+        observe()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun init() {
         homeAdapter = HomeAdapter(sharedViewModel::setSelectedProduct).apply {
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
@@ -45,13 +62,9 @@ class HomeFragment : Fragment() {
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(context)
         }
-
-        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -61,27 +74,22 @@ class HomeFragment : Fragment() {
                                 binding.loadingIndicator.show()
                             }
                             is UiState.Empty -> {
-                                binding.loadingIndicator.hide()
+                                binding.loadingIndicator.isGone = true
                             }
                             is UiState.Success -> {
-                                binding.loadingIndicator.hide()
+                                binding.loadingIndicator.isGone = true
                                 homeAdapter.setData(result.data)
                             }
                             is UiState.Error -> {
                                 Snackbar.make(binding.root, "${result.exception}", Snackbar.LENGTH_INDEFINITE)
                                     .setAction("Update") { sharedViewModel.getProducts() }
                                     .show()
-                                binding.loadingIndicator.hide()
+                                binding.loadingIndicator.isGone = true
                             }
                         }
                     }
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
