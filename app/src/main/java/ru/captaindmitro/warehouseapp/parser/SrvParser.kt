@@ -5,7 +5,7 @@ import java.io.Reader
 
 class SrvParser {
     private val attrStrategy = AttrParseStrategy(
-        """<goods_attr id=\"(\d*)\" attr_id=\"(22|27)\">[-+]?([0-9]*\.[0-9]+)<\/goods_attr>""".toRegex()
+        """<goods_attr id=\"(\d*)\" attr_id=\"(22|27)\">[-+]?([0-9]*\.[0-9]+|[0-9]+)<\/goods_attr>""".toRegex()
     ) { null }
 
     private val mainParseStrategy = MainParseStrategy(

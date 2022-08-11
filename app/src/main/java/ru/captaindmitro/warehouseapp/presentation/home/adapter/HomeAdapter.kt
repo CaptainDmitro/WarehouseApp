@@ -2,12 +2,14 @@ package ru.captaindmitro.warehouseapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.ItemHomeProductBinding
 import ru.captaindmitro.warehouseapp.domain.models.Product
+import ru.captaindmitro.warehouseapp.presentation.home.HomeFragmentDirections
 
 class HomeAdapter(
     private val onClickListener: (Int) -> Unit
@@ -35,7 +37,10 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.apply {
-            // TODO: add click listener
+            binding.root.setOnClickListener { view ->
+                onClickListener(position)
+                view.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
+            }
             bind(asyncListDiffer.currentList[position])
         }
     }
