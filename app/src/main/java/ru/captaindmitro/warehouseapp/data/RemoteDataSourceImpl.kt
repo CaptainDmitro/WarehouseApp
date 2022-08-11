@@ -1,6 +1,5 @@
 package ru.captaindmitro.warehouseapp.data
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import ru.captaindmitro.warehouseapp.di.IoDispatcher

@@ -5,6 +5,7 @@ buildscript {
         androidXRecyclerView = "1.2.1"
         coroutines = "1.6.4"
         retrofit = "2.9.0"
+        mockito = "4.6.1"
     }
 
     repositories {
