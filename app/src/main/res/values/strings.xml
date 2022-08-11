@@ -4,7 +4,7 @@
     <string name="home_fragment_label">WarehouseApp</string>
     <string name="details_fragment_label">Details</string>
 
-    <string name="price_field">%1$.2fР</string>
+    <string name="price_field">%1$.2f Р</string>
     <string name="code_field">Код: %1$d</string>
     <string name="alc_field">%1$.0f%%</string>
 

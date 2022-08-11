@@ -52,7 +52,6 @@ class HomeAdapter(
     }
 
     class HomeViewHolder(val binding: ItemHomeProductBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(product: Product) {
             binding.nameTextView.text = product.name
             binding.codeTextView.text = binding.root.context.getString(R.string.code_field, product.code)

@@ -4,11 +4,11 @@ import ru.captaindmitro.warehouseapp.data.ProductResponse
 import java.io.Reader
 
 class SrvParser {
-    private val attrStrategy = AttrParseStrategy(
+    private val attrStrategy = ParseStrategy.Base(
         """<goods_attr id=\"(\d*)\" attr_id=\"(22|27)\">[-+]?([0-9]*\.[0-9]+|[0-9]+)<\/goods_attr>""".toRegex()
     ) { null }
 
-    private val mainParseStrategy = MainParseStrategy(
+    private val mainParseStrategy = ParseStrategy.Base(
         """(\d*);(\d*);([^;]*);([^;]*);[-+]?([0-9]*\.[0-9]+);[-+]?([0-9]*\.[0-9]+);""".toRegex()
     ) { line -> attrStrategy.parse(line) }
 

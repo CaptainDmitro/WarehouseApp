@@ -3,7 +3,7 @@ package ru.captaindmitro.warehouseapp.parser
 interface ParseStrategy {
     fun parse(line: String): List<String>?
 
-    abstract class Base(
+    class Base(
         private val regex: Regex,
         private val onFailure: (String) -> List<String>?
     ) : ParseStrategy {
@@ -17,13 +17,3 @@ interface ParseStrategy {
 
     }
 }
-
-class MainParseStrategy(
-    regex: Regex,
-    onFailure: (String) -> List<String>?
-) : ParseStrategy.Base(regex, onFailure)
-
-class AttrParseStrategy(
-    regex: Regex,
-    onFailure: (String) -> List<String>?
-) : ParseStrategy.Base(regex, onFailure)

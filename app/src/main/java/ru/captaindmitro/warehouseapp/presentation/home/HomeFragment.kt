@@ -2,7 +2,9 @@ package ru.captaindmitro.warehouseapp.presentation.home
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +16,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.FragmentHomeBinding
 import ru.captaindmitro.warehouseapp.presentation.common.UiState
 import ru.captaindmitro.warehouseapp.presentation.home.adapter.HomeAdapter
@@ -36,8 +37,6 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
-
         homeAdapter = HomeAdapter(sharedViewModel::setSelectedProduct).apply {
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
@@ -45,7 +44,6 @@ class HomeFragment : Fragment() {
         binding.homeRecycleView.apply {
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(context)
-            itemAnimator = null
         }
 
         return binding.root
@@ -56,28 +54,22 @@ class HomeFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                Log.i("Main", "HomeFragment: ${this.coroutineContext}")
                 launch {
                     sharedViewModel.products.collectLatest { result ->
-                        Log.i("Main", "Collecting...")
                         when (result) {
                             is UiState.Loading -> {
-                                Log.i("Main", "Loading...")
                                 binding.loadingIndicator.show()
                             }
                             is UiState.Empty -> {
-                                Log.i("Main", "Empty")
                                 binding.loadingIndicator.hide()
                             }
                             is UiState.Success -> {
-                                Log.i("Main", "Success: ${result.data.size}")
                                 binding.loadingIndicator.hide()
-                                homeAdapter.setData(result.data.take(10))
+                                homeAdapter.setData(result.data)
                             }
                             is UiState.Error -> {
-                                Log.i("Main", "Error: ${result.exception}")
                                 Snackbar.make(binding.root, "${result.exception}", Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("Обновить") { sharedViewModel.getProducts() }
+                                    .setAction("Update") { sharedViewModel.getProducts() }
                                     .show()
                                 binding.loadingIndicator.hide()
                             }
