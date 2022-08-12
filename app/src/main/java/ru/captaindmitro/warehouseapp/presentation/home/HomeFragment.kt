@@ -1,7 +1,6 @@
 package ru.captaindmitro.warehouseapp.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.FragmentHomeBinding
 import ru.captaindmitro.warehouseapp.presentation.common.UiState
 import ru.captaindmitro.warehouseapp.presentation.home.adapter.HomeAdapter
@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
                             }
                             is UiState.Error -> {
                                 Snackbar.make(binding.root, "${result.exception}", Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("Update") { sharedViewModel.getProducts() }
+                                    .setAction(getString(R.string.update)) { sharedViewModel.getProducts() }
                                     .show()
                                 binding.loadingIndicator.isGone = true
                             }

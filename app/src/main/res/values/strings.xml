@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">WarehouseApp</string>
-    <string name="action_settings">Settings</string>
-    <string name="home_fragment_label">WarehouseApp</string>
-    <string name="details_fragment_label">Details</string>
+
+    <string name="update">Обновить</string>
+    <string name="error_fetching_product">Не удалось получить данные</string>
 
     <string name="price_field">%1$.2f Р</string>
     <string name="code_field">Код: %1$d</string>

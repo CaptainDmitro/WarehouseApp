@@ -1,21 +1,17 @@
 package ru.captaindmitro.warehouseapp.presentation.details
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ru.captaindmitro.warehouseapp.R
 import ru.captaindmitro.warehouseapp.databinding.FragmentDetailsBinding
@@ -33,22 +29,29 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return binding.root
 
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observe()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 launch {
                     sharedViewModel.selectedProduct.collectLatest { product ->
-                        Log.i("Main", "Received product: $product")
                         when (product) {
-                            null -> { Snackbar.make(binding.root, "Error loading product", Snackbar.LENGTH_SHORT).show() }
+                            null -> { Snackbar.make(binding.root, getString(R.string.error_fetching_product), Snackbar.LENGTH_SHORT).show() }
                             else -> {
                                 with (binding) {
                                     codeTextView.text = getString(R.string.code_field, product.code)
@@ -73,10 +76,5 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
