@@ -1,155 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
     tools:context=".presentation.details.DetailsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
-
+    <TableRow>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/codeTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintBottom_toTopOf="@+id/nameTextView"
-            app:layout_constraintStart_toStartOf="@+id/nameTextView"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceBody2" />
+    </TableRow>
 
+    <TableRow android:paddingTop="16dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/nameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            app:layout_constraintBottom_toTopOf="@+id/materialTextView7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/materialTextView7"
-            app:layout_constraintTop_toBottomOf="@+id/codeTextView" />
+            tools:text="Veryveryveryveryveryvery long title"
+            android:textAppearance="?attr/textAppearanceHeadline5" />
+    </TableRow>
 
+    <TableRow android:paddingTop="16dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="@string/remains_label"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintBottom_toTopOf="@+id/materialTextView8"
-            app:layout_constraintStart_toStartOf="@+id/materialTextView8"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+            android:textAppearance="?attr/textAppearanceBody1" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/remainsTextView"
+            tools:text="10.0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="?attr/textAppearanceBody2" />
+    </TableRow>
+
+    <TableRow android:paddingTop="8dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/price_label"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintBottom_toTopOf="@+id/materialTextView9"
-            app:layout_constraintStart_toStartOf="@+id/materialTextView9"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView7" />
+            android:textAppearance="?attr/textAppearanceBody1"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/priceTextView"
+            tools:text="100,00 P"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="?attr/textAppearanceBody2" />
+    </TableRow>
+
+    <TableRow android:paddingTop="8dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/rozn_price_label"
-            android:textAppearance="?attr/textAppearanceBody1"
-            app:layout_constraintBottom_toTopOf="@+id/alcTypeField"
-            app:layout_constraintStart_toStartOf="@+id/alcTypeField"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView8" />
+            android:textAppearance="?attr/textAppearanceBody1" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/roznPriceTextView"
+            tools:text="100.00 P"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="?attr/textAppearanceBody2" />
+    </TableRow>
+
+    <TableRow android:paddingTop="8dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/alcTypeField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/alc_type_label"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/alcValueField"
-            app:layout_constraintStart_toStartOf="@+id/alcValueField"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView9" />
+            android:visibility="invisible" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/alcTypeTextView"
+            tools:text="100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:visibility="invisible" />
+    </TableRow>
+
+    <TableRow android:paddingTop="8dp">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/alcValueField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/alc_value_label"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/alcTypeField" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/remainsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintBottom_toTopOf="@+id/priceTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView7"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintBottom_toTopOf="@+id/roznPriceTextView"
-            app:layout_constraintEnd_toEndOf="@+id/remainsTextView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView8"
-            app:layout_constraintTop_toBottomOf="@+id/remainsTextView" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/roznPriceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintBottom_toTopOf="@+id/alcTypeTextView"
-            app:layout_constraintEnd_toEndOf="@+id/priceTextView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/materialTextView9"
-            app:layout_constraintTop_toBottomOf="@+id/priceTextView" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/alcTypeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/alcValueTextView"
-            app:layout_constraintEnd_toEndOf="@+id/roznPriceTextView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/alcTypeField"
-            app:layout_constraintTop_toBottomOf="@+id/roznPriceTextView" />
+            android:visibility="invisible" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/alcValueTextView"
+            tools:text="10%"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:gravity="end"
             android:textAppearance="?attr/textAppearanceBody2"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/alcTypeTextView"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/alcValueField"
-            app:layout_constraintTop_toBottomOf="@+id/alcTypeTextView" />
+            android:visibility="invisible" />
+    </TableRow>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</TableLayout>
