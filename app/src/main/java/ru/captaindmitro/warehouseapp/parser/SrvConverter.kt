@@ -7,14 +7,11 @@ import ru.captaindmitro.warehouseapp.data.ProductResponse
 import java.lang.reflect.Type
 
 class SrvConverter : Converter<ResponseBody, List<ProductResponse>> {
-    private val srvParser = SrvParser()
 
     override fun convert(value: ResponseBody): List<ProductResponse>? {
-        try {
-            val res = srvParser.read(value.charStream())
-            return res
-        } finally {
-            value.close()
+        val srvParser: Parser<ProductResponse> = NewSrvParser()
+        value.use { value ->
+            return srvParser.parse(value.charStream())
         }
     }
 

@@ -6,7 +6,7 @@ import ru.captaindmitro.warehouseapp.data.ProductResponse
 import java.io.StringReader
 
 class SrvParserTest {
-    private val srvParser = SrvParser()
+    private val srvParser: Parser<ProductResponse> = NewSrvParser()
 
     companion object {
         val EXPECTED_PRODUCT_WITH_ATTRS = ProductResponse(20, "4603928005223", "Водка особая \"Государев заказ на черной смородине\"0,5л", "Водка особая \"Государев заказ на черной смородине\"0,5л", 327.00, 3.000, 200, 40.00)
@@ -22,7 +22,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = listOf(EXPECTED_PRODUCT_NO_ATTRS)
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }
@@ -40,7 +40,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = EXPECTED_EMPTY_LIST
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }
@@ -70,7 +70,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = listOf(EXPECTED_PRODUCT_NO_ATTRS)
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }
@@ -85,7 +85,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = listOf(EXPECTED_PRODUCT_WITH_ATTRS)
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }
@@ -100,7 +100,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = EXPECTED_EMPTY_LIST
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }
@@ -118,7 +118,7 @@ class SrvParserTest {
         val reader = StringReader(msg)
 
         val expected = EXPECTED_EMPTY_LIST
-        val actual = srvParser.read(reader)
+        val actual = srvParser.parse(reader)
 
         assertEquals(expected, actual)
     }

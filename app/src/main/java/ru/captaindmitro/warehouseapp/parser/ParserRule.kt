@@ -1,12 +1,13 @@
 package ru.captaindmitro.warehouseapp.parser
 
-interface ParseStrategy {
+interface ParserRule {
+
     fun parse(line: String): List<String>?
 
     class Base(
         private val regex: Regex,
         private val onFailure: (String) -> List<String>?
-    ) : ParseStrategy {
+    ) : ParserRule {
 
         override fun parse(line: String): List<String>? {
             if (regex.containsMatchIn(line)) {
