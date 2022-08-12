@@ -27,8 +27,6 @@ class SharedViewModel @Inject constructor(
     private val _products: MutableStateFlow<UiState<List<Product>>> = MutableStateFlow(UiState.Empty)
     val products = _products.asStateFlow()
 
-//    private val _selectedProduct: MutableStateFlow<Product?> = MutableStateFlow(null)
-//    val selectedProduct = _selectedProduct.asStateFlow()
     val selectedProduct: StateFlow<Product?> = state.getStateFlow(SELECTED_PRODUCT_KEY, null)
 
     init {
@@ -52,7 +50,6 @@ class SharedViewModel @Inject constructor(
     }
 
     fun setSelectedProduct(position: Int) {
-//        _selectedProduct.value = (products.value as UiState.Success).data[position]
         state[SELECTED_PRODUCT_KEY] = (products.value as UiState.Success).data[position]
     }
 
